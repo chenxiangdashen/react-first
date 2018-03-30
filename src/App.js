@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Button,Badge} from 'antd';
 import Login from './views/login/index'
 
 class App extends Component {
