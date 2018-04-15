@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import {Local} from "utils/storage";
 import './index.less'
+import connect from 'connect'
 const FormItem = Form.Item
 
 const users = [
@@ -18,9 +20,26 @@ const users = [
     }
 ]
 
+@connect
 class Login extends React.Component {
     handleSubmit = (e) => {
+        e.preventDefault()
+        let {form, loginUser} = this.props
+        form.validateFields(async (err, values) => {
+            if (err) {
+                message.error(err)
+                return
+            }
+            let { userName, password, remember } = values, user
 
+            try {
+                user = await loginUser({userName, password})
+            } catch (e) {
+                message.error(e)
+                return
+            }
+            this.props.history.push(Local.get('currPath') || '/')
+        })
     }
     render() {
         const {
