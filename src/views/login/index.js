@@ -2,7 +2,11 @@ import React from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import {Local} from "utils/storage";
 import './index.less'
-import connect from 'connect'
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux'
+import actions from 'src/actions'
+
+// import connect from '../../utils/connect'／
 const FormItem = Form.Item
 
 const users = [
@@ -20,11 +24,13 @@ const users = [
     }
 ]
 
-@connect
 class Login extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
-        let {form, loginUser} = this.props
+        let {form, actions} = this.props
+        console.log(actions)
+        console.log(this.context)
+
         form.validateFields(async (err, values) => {
             if (err) {
                 message.error(err)
@@ -33,7 +39,7 @@ class Login extends React.Component {
             let { userName, password, remember } = values, user
 
             try {
-                user = await loginUser({userName, password})
+                user = await actions.loginUser({userName, password})
             } catch (e) {
                 message.error(e)
                 return
@@ -73,7 +79,7 @@ class Login extends React.Component {
                             )}
                             <a className="fr" href="javascript:;">忘记密码</a>
                         </FormItem>
-                        <Button type="primary" htmlType="submit" className="db" className="submit">Log in</Button>
+                        <Button type="primary" htmlType="submit" className="submit">Log in</Button>
                         <FormItem style={{marginBottom: 0}}>
                             <pre style={{lineHeight: '25px'}}>Username: admin      Password: 123456</pre>
                             <pre style={{lineHeight: '25px'}}>Username: editor     Password: 123456</pre>
@@ -86,4 +92,18 @@ class Login extends React.Component {
     }
 }
 
-export default Form.create()(Login)
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(actions, dispatch)
+});
+
+
+export default connect(
+    mapStateToProps,mapDispatchToProps
+)(Form.create()(Login))

@@ -5,7 +5,7 @@ export default loadComponent => (
         state = {
             Component: null,
         }
-        async componentDidMount() {
+        async componentWillMount() {
             if (this.state.Component !== null) return
             
             try {

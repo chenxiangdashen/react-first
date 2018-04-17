@@ -1,24 +1,62 @@
 import React from 'react'
-import Panel from './Panel'
-import Info from './Info'
-import Steps from './Steps'
-import {Row, Col, Card} from 'antd'
+
+
+import { Layout, Menu, Icon } from 'antd';
+import Account from '../Layout/Account'
 import './index.less'
 
-export default () => (
-	<div className="home_wrapper">
-		<Panel/>
-		<Row className="home_body">
-			<Col md={9} className="gutter-row">
-				<Card bordered={false}>
-					<Steps/>
-				</Card>
-			</Col>
-			<Col md={6} className="gutter-row">
-				<Card bordered={false}>
-					<Info/>
-				</Card>
-			</Col>
-		</Row>
-	</div>
-)
+const { Header, Sider, Content } = Layout;
+
+
+
+export default class Home extends React.Component {
+    state = {
+        collapsed: false,
+    };
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    }
+    render() {
+        return (
+			<Layout style={{ minHeight: '100vh'}}>
+				<Sider
+					trigger={null}
+					collapsible
+					collapsed={this.state.collapsed}
+				>
+					<div className="logo" />
+					<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+						<Menu.Item key="1">
+							<Icon type="user" />
+							<span>nav 1</span>
+						</Menu.Item>
+						<Menu.Item key="2">
+							<Icon type="video-camera" />
+							<span>nav 2</span>
+						</Menu.Item>
+						<Menu.Item key="3">
+							<Icon type="upload" />
+							<span>nav 3</span>
+						</Menu.Item>
+					</Menu>
+				</Sider>
+				<Layout>
+					<Header style={{ background: '#fff', padding: 0 , display:'flex' }}>
+						<Icon
+							className="trigger"
+							type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+							onClick={this.toggle}
+						/>
+
+						<Account></Account>
+					</Header>
+					<Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+						Content
+					</Content>
+				</Layout>
+			</Layout>
+        );
+    }
+}
