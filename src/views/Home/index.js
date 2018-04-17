@@ -43,7 +43,7 @@ export default class Home extends React.Component {
 					</Menu>
 				</Sider>
 				<Layout>
-					<Header style={{ background: '#fff', padding: 0 , display:'flex' }}>
+					<Header style={{ background: '#fff', padding: 0 , display:'flex' ,justifyContent:'space-between'}}>
 						<Icon
 							className="trigger"
 							type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}

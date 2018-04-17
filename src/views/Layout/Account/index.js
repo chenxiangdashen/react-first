@@ -6,7 +6,7 @@ const Item = Menu.Item
 const menu = () => (
     <Menu>
         <Item>{'admin'}</Item>
-        <Item><a href="https://github.com/cd-dongzi">Github</a></Item>
+        <Item><a href="https://github.com/chenxiangdashen">Github</a></Item>
         <Item><span onClick={e => {
             Cookie.remove('Auth_Token')
 
